@@ -40,6 +40,7 @@
     "doc": "jsdoc2md lib/platform_tools.js > doc/API.md && node -e \"const fs = require('fs');fs.writeFile('README.md', fs.readFileSync('doc/README.md'));['doc/README.md', 'doc/API.md', 'doc/LICENSE.md'].forEach(function(el){fs.appendFileSync('README.md',fs.readFileSync(el))})\"",
     "test": "istanbul cover ./node_modules/tape/bin/tape 'test/**/*.spec.js'",
     "lint": "standard lib/**/*.js",
+    "pretest": "npm run lint",
     "posttest": "istanbul check-coverage --statements 80 --branches 65 --functions 55 --lines 80",
     "postversion": "TAG=$(echo $(git describe --tags $(git rev-list --tags --max-count=1))) && git tag -a $TAG $TAG -f -m \"$(git log `git describe --tags --abbrev=0 HEAD^`..HEAD --oneline)\" && git push && git push --tags"
   },
