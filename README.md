@@ -20,8 +20,6 @@ All keys are stored in a single object so the practical limit is at around 1m ke
   npm install nnash --save
 ```
 
-Or just require the `node_cache.js` file to get the superclass
-
 # Examples:
 
 ## Initialize (INIT):
