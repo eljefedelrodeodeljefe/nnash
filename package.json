@@ -1,0 +1,46 @@
+{
+  "name": "nnash",
+  "description": "Simple and fast NodeJS internal caching. Controllable through streams and events.",
+  "keywords": [
+    "cache",
+    "caching",
+    "local",
+    "variable",
+    "multi",
+    "memory",
+    "internal",
+    "node",
+    "memcached",
+    "redis"
+  ],
+  "tags": [
+    "cache",
+    "caching",
+    "local",
+    "variable",
+    "multi",
+    "memory",
+    "internal",
+    "node",
+    "memcached"
+  ],
+  "version": "0.1.0",
+  "author": "Robert Jefe Lindstaedt <robert.lindstaedt@gmail.com>",
+  "main": "./index.js",
+  "homepage": "https://github.com/eljefedelrodeodeljefe/nnash",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/eljefedelrodeodeljefe/nnash.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 4.0.0"
+  },
+  "scripts": {
+    "test": "tape test/**/*.spec.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tape": "^4.6.0"
+  }
+}
