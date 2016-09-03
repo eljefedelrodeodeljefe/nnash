@@ -12,3 +12,7 @@ node_js:
   - 6
 
 install: npm install
+
+after_script:
+  - npm install coveralls -g
+  - cat ./coverage/lcov.info | coveralls && rm -rf ./coverage
