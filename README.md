@@ -4,6 +4,7 @@ nnash
 [![Build Status](https://secure.travis-ci.org/eljefedelrodeodeljefe/nnash.svg?branch=master)](http://travis-ci.org/eljefedelrodeodeljefe/nnash)
 [![Build Status](https://david-dm.org/eljefedelrodeodeljefe/nnash.svg)](https://david-dm.org/eljefedelrodeodeljefe/nnash)
 [![NPM version](https://badge.fury.io/js/nnash.svg)](http://badge.fury.io/js/nnash)
+[![Coverage Status](https://coveralls.io/repos/github/eljefedelrodeodeljefe/nnash/badge.svg?branch=master)](https://coveralls.io/github/eljefedelrodeodeljefe/nnash?branch=master)
 
 [![NPM](https://nodei.co/npm/nnash.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/nnash/)
 
