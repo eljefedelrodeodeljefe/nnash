@@ -1,3 +1,4 @@
+'use strict'
 var NodeCache, _read, _write, idx, queriesCache;
 
 NodeCache = require('../');
