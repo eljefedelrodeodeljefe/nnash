@@ -339,7 +339,7 @@ test('flush', function (t) {
   t.equal(c.getStats().keys, startKeys + count)
   c.flushAll(false)
   t.equal(c.getStats().keys, 0)
-  t.deepEqual(c.data, {})
+  t.deepEqual(c.storage.data, {})
 })
 
 test('many', function (t) {
@@ -639,7 +639,7 @@ test('ttl', function (t) {
 
           return setTimeout(function () {
             c._checkData(false)
-            t.equal(c.data[key], undefined)
+            t.equal(c.storage.data[key], undefined)
             c.removeAllListeners('set')
             c.removeAllListeners('expired')
           }, 700)
@@ -668,7 +668,7 @@ test('ttl', function (t) {
       setTimeout(function () {
         res = c.get(key3)
         t.equal(res, undefined)
-        t.equal(c.data[key3], undefined)
+        t.equal(c.storage.data[key3], undefined)
       }, 500)
     })
   })
@@ -687,7 +687,7 @@ test('ttl', function (t) {
       c.ttl(key4, function (err, setted) {
         t.equal(err, null)
         t.ok(setted)
-        t.equal(c.data[key4], undefined)
+        t.equal(c.storage.data[key4], undefined)
       })
     })
   })
@@ -724,7 +724,7 @@ test('cache with TTL', function (t) {
         t.equal(res, undefined)
 
         localCacheTTL._checkData(false)
-        t.equal(localCacheTTL.data[key5], undefined)
+        t.equal(localCacheTTL.storage.data[key5], undefined)
       }, 500)
     })
   })
