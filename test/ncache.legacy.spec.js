@@ -1,4 +1,5 @@
 const test = require('tape')
+const assert = require('assert')
 const VCache = require('../')
 
 // TODO: remove temporary hack. Prefer Object.assign
@@ -313,7 +314,7 @@ test('general sync', function (t) {
 })
 
 test('flush', function (t) {
-  t.plan(103)
+  t.plan(3)
   var i, j, k, key, len, ref
   console.log("\nSTART FLUSH TEST")
 
@@ -334,7 +335,7 @@ test('flush', function (t) {
     key = ks[k]
     c.set(key, val, 0, function (err, res) {
       n++;
-      t.equal(err, null)
+      assert.equal(err, null)
     })
   }
   t.equal(c.getStats().keys, startKeys + count)
@@ -345,8 +346,6 @@ test('flush', function (t) {
 
 
 test('many', function (t) {
-  t.plan(200000)
-
   const c = new VCache()
 
   let time, _dur, i, j, k, key, l, len, len1, ref;
@@ -365,7 +364,7 @@ test('many', function (t) {
   time = new Date().getTime()
   for (k = 0, len = ks.length; k < len; k++) {
     key = ks[k]
-    t.ok(c.set(key, val, 0))
+    assert.ok(c.set(key, val, 0))
   }
   _dur = new Date().getTime() - time
 
@@ -375,12 +374,13 @@ test('many', function (t) {
   for (l = 0, len1 = ks.length; l < len1; l++) {
     key = ks[l]
     n++
-    t.equal(val, c.get(key))
+    assert.equal(val, c.get(key))
   }
   _dur = new Date().getTime() - time
-
   console.log("BENCHMARK for GET:", _dur + "ms", " ( " + (_dur / count) + "ms per item ) ")
   console.log("BENCHMARK STATS:", c.getStats())
+  t.pass()
+  t.end()
 })
 
 test('delete', function (t) {
@@ -402,16 +402,16 @@ test('delete', function (t) {
   for (var i = 0; i < count; i++) {
     c.del(ks[i], function (err, res) {
       n++
-      t.equal(err, null)
-      return t.equal(res, 1)
+      assert.equal(err, null)
+      return assert.equal(res, 1)
     })
   }
 
   for (var i = 0; i < count; i++) {
     c.del(ks[i], function (err, res) {
       n++
-      t.equal(res, 0)
-      return t.equal(err, null)
+      assert.equal(res, 0)
+      return assert.equal(err, null)
     })
   }
 
