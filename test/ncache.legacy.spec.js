@@ -1,6 +1,10 @@
 const test = require('tape')
-const _clone = require("lodash/clone")
-const VCache = require("../")
+const VCache = require('../')
+
+// TODO: remove temporary hack. Prefer Object.assign
+function _clone (obj) {
+  return JSON.parse(JSON.stringify(obj))
+}
 
 let localCache = new VCache({
   stdTTL: 0
