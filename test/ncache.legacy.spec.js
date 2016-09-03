@@ -30,25 +30,24 @@ function randomString (length, withnumbers) {
   if (withnumbers == null) {
     withnumbers = true
   }
-  chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+  chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
   if (withnumbers) {
-    chars += "0123456789"
+    chars += '0123456789'
   }
-  string_length = length || 5;
-  randomstring = ""
+  string_length = length || 5
+  randomstring = ''
   i = 0
   while (i < string_length) {
     rnum = Math.floor(Math.random() * chars.length)
     randomstring += chars.substring(rnum, rnum + 1)
     i++
   }
-  return randomstring;
+  return randomstring
 };
-
 
 test('general', function (t) {
   t.plan(27)
-  console.log("\nSTART GENERAL TEST: `" + VCache.version + ("` on node:`" + process.version + "`"))
+  console.log('\nSTART GENERAL TEST: `' + VCache.version + ('` on node:`' + process.version + '`'))
 
   const c = new VCache()
 
@@ -58,7 +57,7 @@ test('general', function (t) {
   const value2 = randomString(100)
   const key = randomString(10)
 
-  c.once("del", function (_key, _val) {
+  c.once('del', function (_key, _val) {
     t.equal(_key, key)
     t.equal(_val, value2)
   })
@@ -79,7 +78,7 @@ test('general', function (t) {
       t.deepEqual(pred, res)
     })
 
-    c.get("yxx", function (err, res) {
+    c.get('yxx', function (err, res) {
       n++
       t.equal(err, null)
       t.equal(res, undefined)
@@ -87,18 +86,18 @@ test('general', function (t) {
 
     const errorHandlerCallback = function (err, res) {
       n++
-      t.equal(err.name, "ENOTFOUND")
+      t.equal(err.name, 'ENOTFOUND')
       // t.equal(err.message, "Key `xxx` not found")
     }
 
-    c.get("xxx", errorHandlerCallback, true)
+    c.get('xxx', errorHandlerCallback, true)
 
     try {
-      c.get("xxy", true)
+      c.get('xxy', true)
     } catch (error) {
       const err = error
       n++
-      t.equal(err.name, "ENOTFOUND")
+      t.equal(err.name, 'ENOTFOUND')
       // t.equal(err.message, "Key `xxy` not found")
     }
 
@@ -107,11 +106,11 @@ test('general', function (t) {
     c.options.errorOnMissing = true
 
     try {
-      c.get("xxz")
+      c.get('xxz')
     } catch (error1) {
       const err = error1
       n++
-      t.equal(err.name, "ENOTFOUND")
+      t.equal(err.name, 'ENOTFOUND')
       // t.equal(err.message, "Key `xxz` not found")
     }
 
@@ -119,11 +118,10 @@ test('general', function (t) {
 
     console.log(c.options.errorOnMissing)
 
-    c.del("xxx", function (err, res) {
+    c.del('xxx', function (err, res) {
       n++
       t.equal(err, null)
       t.equal(0, res)
-
     })
 
     c.set(key, value2, 0, function (err, res) {
@@ -140,7 +138,7 @@ test('general', function (t) {
     })
 
     c.del(key, function (err, res) {
-      c.removeAllListeners("del")
+      c.removeAllListeners('del')
       n++
       t.equal(err, null)
       t.equal(1, res)
@@ -152,13 +150,13 @@ test('general', function (t) {
         t.equal(res, undefined)
       })
 
-      c.set("zero", 0, 0, function (err, res) {
+      c.set('zero', 0, 0, function (err, res) {
         n++
         t.equal(err, null)
         t.ok(res, err)
       })
 
-      c.get("zero", function (err, res) {
+      c.get('zero', function (err, res) {
         n++
         t.equal(err, null)
         t.equal(0, res)
@@ -166,26 +164,26 @@ test('general', function (t) {
     })
   })
 
-  if (typeof Promise !== "undefined" && Promise !== null) {
+  if (typeof Promise !== 'undefined' && Promise !== null) {
     let p = new Promise(function (fulfill, reject) {
       return fulfill('Some deferred value')
     })
     p.then(function (value) {
       t.equal(value, 'Some deferred value')
     })
-    localCacheNoClone.set("promise", p)
-    let q = localCacheNoClone.get("promise")
+    localCacheNoClone.set('promise', p)
+    let q = localCacheNoClone.get('promise')
     try {
       q.then(function (value) {
-        n++;
+        n++
       })
     } catch (error) {
-      _err = error;
+      _err = error
       t.ok(false, _err)
-      return;
+      return
     }
   } else {
-    console.log("No Promise test, because not availible in this node version")
+    console.log('No Promise test, because not availible in this node version')
   }
   // TODO
   // beforeExit(function () {
@@ -200,7 +198,7 @@ test('general', function (t) {
 
 test('general sync', function (t) {
   let res, pred
-  console.log("\nSTART GENERAL TEST SYNC")
+  console.log('\nSTART GENERAL TEST SYNC')
 
   const c = new VCache()
 
@@ -211,7 +209,7 @@ test('general sync', function (t) {
   const value2 = randomString(100)
   const key = randomString(10)
 
-  c.once("del", function (_key, _val) {
+  c.once('del', function (_key, _val) {
     t.equal(_key, key)
     t.equal(_val, value2)
   })
@@ -226,10 +224,10 @@ test('general sync', function (t) {
   pred = [key]
   t.deepEqual(pred, res)
 
-  res = c.get("xxx")
+  res = c.get('xxx')
   t.equal(res, undefined)
 
-  res = c.del("xxx")
+  res = c.del('xxx')
   t.equal(0, res)
 
   res = c.set(key, value2, 0)
@@ -240,58 +238,57 @@ test('general sync', function (t) {
   t.equal(1, c.getStats().keys - start.keys)
 
   res = c.del(key)
-  c.removeAllListeners("del")
+  c.removeAllListeners('del')
   t.equal(1, res)
   t.equal(0, c.getStats().keys - start.keys)
 
   res = c.get(key)
   t.equal(res, undefined)
 
-  res = c.set("mulitA", 23)
+  res = c.set('mulitA', 23)
   t.ok(res, res)
 
-  res = c.set("mulitB", 23)
+  res = c.set('mulitB', 23)
   t.ok(res, res)
 
-  res = c.set("mulitC", 23)
+  res = c.set('mulitC', 23)
   t.ok(res, res)
 
-  res = c.get("mulitA")
+  res = c.get('mulitA')
   t.equal(res, 23)
 
-  res = c.get("mulitB")
+  res = c.get('mulitB')
   t.equal(res, 23)
 
-  res = c.get("mulitC")
+  res = c.get('mulitC')
   t.equal(res, 23)
 
-  res = c.del(["mulitA", "mulitB"])
+  res = c.del(['mulitA', 'mulitB'])
   t.equal(2, res)
 
-  res = c.get("mulitA")
+  res = c.get('mulitA')
   t.equal(res, undefined)
 
-  res = c.get("mulitB")
+  res = c.get('mulitB')
   t.equal(res, undefined)
 
-  res = c.get("mulitC")
+  res = c.get('mulitC')
   t.equal(res, 23)
 
-  res = c.del(["mulitC"])
+  res = c.del(['mulitC'])
   t.equal(1, res)
 
-  res = c.get("mulitC")
+  res = c.get('mulitC')
   t.equal(res, undefined)
 
-  res = c.del(["mulitA", "mulitB", "mulitC"])
+  res = c.del(['mulitA', 'mulitB', 'mulitC'])
   t.equal(0, res)
 
-  res = c.set("zero", 0, 0)
+  res = c.set('zero', 0, 0)
   t.ok(res, res)
 
-  res = c.get("zero")
+  res = c.get('zero')
   t.equal(0, res)
-
 
   let tObj = {
     a: 1,
@@ -301,15 +298,15 @@ test('general sync', function (t) {
     }
   }
 
-  res = c.set("clone", tObj, 0)
+  res = c.set('clone', tObj, 0)
   t.ok(res, res)
   tObj.b.x = 666
 
-  res = c.get("clone")
+  res = c.get('clone')
   t.equal(2, res.b.x)
   res.b.y = 42
 
-  const res2 = c.get("clone")
+  const res2 = c.get('clone')
   t.equal(3, res2.b.y)
   t.end()
 })
@@ -317,7 +314,7 @@ test('general sync', function (t) {
 test('flush', function (t) {
   t.plan(3)
   var i, j, k, key, len, ref
-  console.log("\nSTART FLUSH TEST")
+  console.log('\nSTART FLUSH TEST')
 
   const c = new VCache()
 
@@ -335,7 +332,7 @@ test('flush', function (t) {
   for (k = 0, len = ks.length; k < len; k++) {
     key = ks[k]
     c.set(key, val, 0, function (err, res) {
-      n++;
+      n++
       assert.equal(err, null)
     })
   }
@@ -345,16 +342,15 @@ test('flush', function (t) {
   t.deepEqual(c.data, {})
 })
 
-
 test('many', function (t) {
   const c = new VCache()
 
-  let time, _dur, i, j, k, key, l, len, len1, ref;
+  let time, _dur, i, j, k, key, l, len, len1, ref
   let n = 0
   const count = 100000
   const ks = []
 
-  console.log("\nSTART MANY TEST/BENCHMARK.\nSet, Get and check " + count + " elements")
+  console.log('\nSTART MANY TEST/BENCHMARK.\nSet, Get and check ' + count + ' elements')
 
   const val = randomString(20)
 
@@ -369,7 +365,7 @@ test('many', function (t) {
   }
   _dur = new Date().getTime() - time
 
-  console.log("BENCHMARK for SET:", _dur + "ms", " ( " + (_dur / count) + "ms per item ) ")
+  console.log('BENCHMARK for SET:', _dur + 'ms', ' ( ' + (_dur / count) + 'ms per item ) ')
 
   time = new Date().getTime()
   for (l = 0, len1 = ks.length; l < len1; l++) {
@@ -378,20 +374,20 @@ test('many', function (t) {
     assert.equal(val, c.get(key))
   }
   _dur = new Date().getTime() - time
-  console.log("BENCHMARK for GET:", _dur + "ms", " ( " + (_dur / count) + "ms per item ) ")
-  console.log("BENCHMARK STATS:", c.getStats())
+  console.log('BENCHMARK for GET:', _dur + 'ms', ' ( ' + (_dur / count) + 'ms per item ) ')
+  console.log('BENCHMARK STATS:', c.getStats())
   t.pass()
   t.end()
 })
 
 test('delete', function (t) {
-  console.log("\nSTART DELETE TEST")
+  console.log('\nSTART DELETE TEST')
   const c = new VCache()
 
   let n = 0
   const count = 10000
 
-  const ks = [];
+  const ks = []
   for (var i = 0; i < count; i++) {
     let key = randomString(7)
     ks.push(key)
@@ -421,14 +417,13 @@ test('delete', function (t) {
   t.end()
 })
 
-
 test('stats', function (t) {
   t.plan(55)
   var i, j, k, l, ref, ref1, ref2
 
   const c = new VCache()
 
-  console.log("\nSTART STATS TEST")
+  console.log('\nSTART STATS TEST')
 
   let n = 0
 
@@ -444,7 +439,7 @@ test('stats', function (t) {
     vals.push(val)
 
     c.set(key, val, 0, function (err, success) {
-      n++;
+      n++
       t.equal(err, null)
       t.ok(success)
     })
@@ -464,8 +459,8 @@ test('stats', function (t) {
   }
 
   for (i = l = 1, ref2 = count; 1 <= ref2 ? l <= ref2 : l >= ref2; i = 1 <= ref2 ? ++l : --l) {
-    c.get("xxxx", function (err, res) {
-      ++n;
+    c.get('xxxx', function (err, res) {
+      ++n
       t.equal(err, null)
       t.equal(res, undefined)
     })
@@ -473,24 +468,23 @@ test('stats', function (t) {
 
   const end = c.getStats()
 
-  t.equal(end.hits - start.hits, 5, "hits wrong")
-  t.equal(end.misses - start.misses, 5, "misses wrong")
-  t.equal(end.keys - start.keys, 5, "hits wrong")
-  t.equal(end.ksize - start.ksize, 5 * 7, "hits wrong")
-  t.equal(end.vsize - start.vsize, 5 * 50, "hits wrong")
+  t.equal(end.hits - start.hits, 5, 'hits wrong')
+  t.equal(end.misses - start.misses, 5, 'misses wrong')
+  t.equal(end.keys - start.keys, 5, 'hits wrong')
+  t.equal(end.ksize - start.ksize, 5 * 7, 'hits wrong')
+  t.equal(end.vsize - start.vsize, 5 * 50, 'hits wrong')
 })
-
 
 test('multi', function (t) {
   t.plan(110)
   var i, j, k, l, len, len1, ref
-  console.log("\nSTART MULTI TEST")
+  console.log('\nSTART MULTI TEST')
 
   const c = new VCache()
 
   let n = 0
-  const count = 100;
-  const ks = [];
+  const count = 100
+  const ks = []
   const val = randomString(20)
 
   for (i = j = 1, ref = count; 1 <= ref ? j <= ref : j >= ref; i = 1 <= ref ? ++j : --j) {
@@ -519,8 +513,8 @@ test('multi', function (t) {
   c.mget(getKeys[0], function (err, res) {
     n++
     t.ok(err !== null)
-    t.equal(err.constructor.name, "Error")
-    t.equal("EKEYSTYPE", err.name)
+    t.equal(err.constructor.name, 'Error')
+    t.equal('EKEYSTYPE', err.name)
     t.equal(res, undefined)
   })
   c.mget(getKeys, function (err, res) {
@@ -543,20 +537,20 @@ test('multi', function (t) {
 
 test('ttl', function (t) {
   t.plan(43)
-  console.log("\nSTART TTL TEST")
+  console.log('\nSTART TTL TEST')
 
   const c = new VCache({
     stdTTL: 0
   })
 
   const val = randomString(20)
-  const key = "k1_" + randomString(7)
-  const key2 = "k2_" + randomString(7)
-  const key3 = "k3_" + randomString(7)
-  const key4 = "k4_" + randomString(7)
-  const key5 = "k5_" + randomString(7)
+  const key = 'k1_' + randomString(7)
+  const key2 = 'k2_' + randomString(7)
+  const key3 = 'k3_' + randomString(7)
+  const key4 = 'k4_' + randomString(7)
+  const key5 = 'k5_' + randomString(7)
   const _keys = [key, key2, key3, key4, key5]
-  let n = 0;
+  let n = 0
   const _now = Date.now()
 
   c.set(key, val, 0.5, function (err, res) {
@@ -566,7 +560,7 @@ test('ttl', function (t) {
     const ts = c.getTTL(key)
 
     if (ts > _now && ts < _now + 300) {
-      throw new Error("Invalid timestamp")
+      throw new Error('Invalid timestamp')
     }
 
     c.get(key, function (err, res) {
@@ -608,7 +602,7 @@ test('ttl', function (t) {
 
     c.getTTL(key, function (err, ts) {
       if (ts > _now && ts < _now + 300) {
-        throw new Error("Invalid timestamp")
+        throw new Error('Invalid timestamp')
       }
     })
 
@@ -616,13 +610,12 @@ test('ttl', function (t) {
       t.equal(err, null)
       t.equal(val, res)
     })
-
   }, 250)
 
   setTimeout(function () {
     process.nextTick(function () {
       const startKeys = c.getStats().keys
-      const key = "autotest"
+      const key = 'autotest'
       const _testExpired = function (_key, _val) {
         if (Array.prototype.indexOf.call(_keys, _key) < 0) {
           t.equal(_key, key)
@@ -634,7 +627,7 @@ test('ttl', function (t) {
         t.equal(_key, key)
       }
 
-      c.once("set", _testSet)
+      c.once('set', _testSet)
       c.set(key, val, 0.5, function (err, res) {
         t.equal(err, null)
         t.ok(res)
@@ -642,13 +635,13 @@ test('ttl', function (t) {
 
         c.get(key, function (err, res) {
           t.equal(val, res)
-          c.on("expired", _testExpired)
+          c.on('expired', _testExpired)
 
           return setTimeout(function () {
             c._checkData(false)
             t.equal(c.data[key], undefined)
-            c.removeAllListeners("set")
-            c.removeAllListeners("expired")
+            c.removeAllListeners('set')
+            c.removeAllListeners('expired')
           }, 700)
         })
       })
@@ -661,7 +654,7 @@ test('ttl', function (t) {
     c.get(key3, function (err, res) {
       t.equal(err, null)
       t.equal(val, res)
-      c.ttl(key3 + "false", 0.3, function (err, setted) {
+      c.ttl(key3 + 'false', 0.3, function (err, setted) {
         t.equal(err, null)
         t.equal(false, setted)
       })
@@ -687,7 +680,7 @@ test('ttl', function (t) {
     c.get(key4, function (err, res) {
       t.equal(err, null)
       t.equal(val, res)
-      c.ttl(key4 + "false", function (err, setted) {
+      c.ttl(key4 + 'false', function (err, setted) {
         t.equal(err, null)
         return t.equal(false, setted)
       })
@@ -700,11 +693,10 @@ test('ttl', function (t) {
   })
 })
 
-
 test('cache with TTL', function (t) {
   t.plan(11)
   const val = randomString(20)
-  const key5 = "k5_" + randomString(7)
+  const key5 = 'k5_' + randomString(7)
   localCacheTTL.set(key5, val, 100, function (err, res) {
     t.equal(err, null)
     t.ok(res)
@@ -713,7 +705,7 @@ test('cache with TTL', function (t) {
       t.equal(err, null)
       t.equal(val, res)
 
-      localCacheTTL.ttl(key5 + "false", function (err, setted) {
+      localCacheTTL.ttl(key5 + 'false', function (err, setted) {
         t.equal(err, null)
         t.equal(false, setted)
       })
