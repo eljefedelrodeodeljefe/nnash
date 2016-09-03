@@ -167,14 +167,14 @@ test('general', function (t) {
   })
 
   if (typeof Promise !== "undefined" && Promise !== null) {
-    p = new Promise(function (fulfill, reject) {
+    let p = new Promise(function (fulfill, reject) {
       return fulfill('Some deferred value')
     })
     p.then(function (value) {
       t.equal(value, 'Some deferred value')
     })
     localCacheNoClone.set("promise", p)
-    q = localCacheNoClone.get("promise")
+    let q = localCacheNoClone.get("promise")
     try {
       q.then(function (value) {
         n++;
@@ -309,7 +309,7 @@ test('general sync', function (t) {
   t.equal(2, res.b.x)
   res.b.y = 42
 
-  res2 = c.get("clone")
+  const res2 = c.get("clone")
   t.equal(3, res2.b.y)
   t.end()
 })
@@ -513,7 +513,7 @@ test('multi', function (t) {
   let pred = {}
 
   for (l = 0, len1 = getKeys.length; l < len1; l++) {
-    key = getKeys[l]
+    const key = getKeys[l]
     pred[key] = val
   }
   c.mget(getKeys[0], function (err, res) {
