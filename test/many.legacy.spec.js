@@ -28,7 +28,7 @@ function gen (ks, cb) {
 
 function check (ks, cb) {
   for (var l = 0, len1 = ks.length; l < len1; l++) {
-    key = ks[l]
+    let key = ks[l]
     n++
     c.get(key, (err, res) => {
       if (err) {
