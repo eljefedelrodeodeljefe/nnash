@@ -11,16 +11,14 @@ const key = randomString(10)
 
 
 test('stats', function (t) {
-  t.plan(55)
+  t.plan(45)
   var i, j, k, l, ref, ref1, ref2
-
-  const c = new VCache()
 
   console.log('\nSTART STATS TEST')
 
   let n = 0
 
-  const start = _clone(localCache.getStats())
+  const start = _clone(c.getStats())
   const count = 5
   const keys = []
   const vals = []
@@ -31,10 +29,9 @@ test('stats', function (t) {
     keys.push(key)
     vals.push(val)
 
-    c.set(key, val, 0, function (err, success) {
+    c.set(key, val, 0, function (err) {
       n++
       t.equal(err, null)
-      t.ok(success)
     })
   }
 
@@ -44,10 +41,10 @@ test('stats', function (t) {
       t.equal(vals[i], res)
       t.equal(err, null)
     })
-    c.del(keys[i], function (err, success) {
+    c.del(keys[i], function (err, count) {
       n++
       t.equal(err, null)
-      t.ok(success)
+      t.ok(count)
     })
   }
 
