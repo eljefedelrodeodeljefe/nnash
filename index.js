@@ -1,2 +1,2 @@
 'use strict'
-module.exports = require('./lib/ncache')
+module.exports = require('./lib/nnash')
