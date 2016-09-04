@@ -9,40 +9,65 @@ const value = randomString(100)
 const value2 = randomString(100)
 const key = randomString(10)
 
+let startKeys
 
-test('delete', function (t) {
-  console.log('\nSTART DELETE TEST')
-  const c = new VCache()
+const ks = []
+let n = 0
+const count = 10000
 
-  let n = 0
-  const count = 10000
 
-  const ks = []
+function gen (cb) {
   for (var i = 0; i < count; i++) {
     let key = randomString(7)
     ks.push(key)
-    c.set(key, {})
+    c.set(key, {}, function () {
+      if (i === count - 1) {
+        startKeys = c.getStats().keys
+        cb()
+      }
+    })
   }
+}
 
-  const startKeys = c.getStats().keys
-
+function deleteAll (cb) {
   for (var i = 0; i < count; i++) {
     c.del(ks[i], function (err, res) {
       n++
       assert.equal(err, null)
-      return assert.equal(res, 1)
+      assert.equal(res, 1)
+
+      if (i === count - 1) {
+        return cb()
+      }
     })
   }
+}
 
+function deleteAllAgain (cb) {
   for (var i = 0; i < count; i++) {
     c.del(ks[i], function (err, res) {
       n++
       assert.equal(res, 0)
-      return assert.equal(err, null)
+      assert.equal(err, null)
+
+      if (i === count - 1) {
+        return cb()
+      }
     })
   }
+}
 
-  t.equal(startKeys - count, c.getStats().keys)
+test('delete', function (t) {
+  console.log('\nSTART DELETE TEST')
 
-  t.end()
+  gen(() => {
+    deleteAll(() => {
+      deleteAllAgain(() => {
+        // REVIEW: what are we actually checking here?
+        t.equal(startKeys - count, c.getStats().keys)
+        t.pass('When native assert hasn\'t thrown, this does pass.')
+        t.end()
+      })
+    })
+  })
 })
